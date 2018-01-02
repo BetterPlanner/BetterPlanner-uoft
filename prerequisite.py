@@ -44,12 +44,23 @@ def recognized_prereq(lst): #Return a list of all the courses with a recognizabl
     return recognized_dict
 def interface(recognized_dict):
     courseStructure = ""
+    newList =[]
     for key in recognized_dict:
         courseStructure= key
         for i in recognized_dict[key]:
             courseStructure+="---->"+i+"\n"+"        "
+            newList.append(i)
         print(courseStructure)
+        print(newList)
+def getCourseInfo(dict): #DB Search for courses that have a specific prerequisite
+    for key in dict:
+        #calls database to grab Courseinfo
+        print(courseInfo)
+    pass
 
-
+def grabSearch(searchParameter):
+    #call db function that searches for prereq
+    #returns object and return as JS object
+    pass
 dict = (recognized_prereq(test2))
 interface(dict)
