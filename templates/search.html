@@ -1,0 +1,25 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="jumbotron text-center">
+
+        <ul class="list-group">
+
+            <a href="https://student.utm.utoronto.ca/calendar/OpenCourse.pl?Course={{Data['course code']}}">{{Data['course code']}}</a>
+            <li class="list-group-item">
+                Prerequisite:{{Data['prereq']}} <br>
+                Corequisite:{{Data['corequisite']}} <br>
+                Exclusion:{{Data['exclusion']}} <br>
+
+            </li>
+
+              Necessary for:
+            {% for prereq in prereqs %}
+            <li class="list-group-item">
+                {{ prereq}}             </li><br>
+                {% endfor %}
+
+
+        </ul>
+    </div>
+{% endblock %}

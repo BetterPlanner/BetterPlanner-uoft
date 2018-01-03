@@ -1,28 +1,20 @@
-web = __import__('webScraper')
-
-lst = web.HTMLParser()
-for i in lst:
-    web.clean_distribution(i)
-    web.clean_prereq(i)
-
-test = lst[6]
-test2 = lst
+#web = __import__('webScraper')
+from pymongo import MongoClient
 #for i in lst:
 #    clean_distribution(i)
 #print(lst)
 
 #print(test['prereq'])
 #print(test['course name'])
-def recognized_prereq(lst): #Return a list of all the courses with a recognizable coursecode
+def recognized_prereq(lst): #Return a dictionary of all the courses with a recognizable coursecode
     recognized = []
     recognized_dict= {}
     for dict in lst:
         if "prereq" not in dict:
             pass
         else:
-            print(dict['prereq'])
             prereq = dict['prereq']
-            prereq = prereq.replace('(',"").replace(' ',"").replace("/",",").replace(")","").replace(";",",")
+            prereq = prereq.replace('(',"").replace(' ',"").replace("/",",").replace(")","").replace(";",",").replace("."," dot ")
             prereq_lst = prereq.split(',')
             prefix =''
             for i in prereq_lst:
@@ -42,25 +34,11 @@ def recognized_prereq(lst): #Return a list of all the courses with a recognizabl
                         recognized_dict[i] = [dict['course code']]
 
     return recognized_dict
-def interface(recognized_dict):
-    courseStructure = ""
-    newList =[]
-    for key in recognized_dict:
-        courseStructure= key
-        for i in recognized_dict[key]:
-            courseStructure+="---->"+i+"\n"+"        "
-            newList.append(i)
-        print(courseStructure)
-        print(newList)
-def getCourseInfo(dict): #DB Search for courses that have a specific prerequisite
-    for key in dict:
+def getCourseInfo(courseCode,collection): #DB Search for courses that have a specific prerequisite
         #calls database to grab Courseinfo
-        print(courseInfo)
-    pass
+    return collection.find_one({"course code":courseCode})
 
 def grabSearch(searchParameter):
     #call db function that searches for prereq
     #returns object and return as JS object
     pass
-dict = (recognized_prereq(test2))
-interface(dict)

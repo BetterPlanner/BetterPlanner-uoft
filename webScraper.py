@@ -1,11 +1,22 @@
 import requests
-import pyjs
 import json
-def HTMLParser():
-    raw_text = requests.get("http://student.utm.utoronto.ca/calendar/list_courses.pl?Depart=9")
+from pymongo import MongoClient
+rec_prereq = __import__('prerequisite')
+client = MongoClient('localhost', 27017)
+db = client.test
+#collection = db.prereq
+#collection.remove({})
+#collection.remove({})
+#collection.insert_one({"mat102":5})
+def HTMLParser(program):
+    raw_text = requests.get("http://student.utm.utoronto.ca/calendar/list_courses.pl?Depart="+program)
+
     text =  raw_text.content.decode("utf-8")
     text = text[text.find("Academic Calendar 2017"):]#we cut text to make the file shorter
     lst = []
+    if text.find("Program Not Found") != -1 or text.find("This program is no longer offered")!=-1:
+        print("this runs")
+        return lst
     while text.find('p class="titlestyle"')!=-1:
         dict = {}
 
@@ -68,11 +79,11 @@ def HTMLParser():
             text=text[coreEnd+4:]
         text = fullText
         #print(dict)
+        clean_distribution(dict)
+        clean_prereq(dict)
+        #collection.insert(dict)
         lst.append(dict)
-        #print(dict)
-    #with open('file.txt', 'w') as file: #This will write the lst of dictionaries into a file, will soon be replaced with a DB
-        #for i in lst:
-            #file.write(json.dumps(i))
+
     return lst
 
 
@@ -97,9 +108,11 @@ def clean_prereq(dict):
         #print(js)
     dict['prereq'] = raw_prereq
 
-
-#lst = HTMLParser()
-#test = lst[33]
+lst = HTMLParser(str(7))
+#dic = rec_prereq.recognized_prereq(lst)
+#collection.insert(dic)
+#collection.insert_many(lst)
+#print(collection.find_one({"course code": "CSC104H5" }))
 #for i in lst:
 #    clean_distribution(i)
 #print(lst)
