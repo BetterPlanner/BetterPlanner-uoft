@@ -4,17 +4,17 @@ from pymongo import MongoClient
 rec_prereq = __import__('prerequisite')
 client = MongoClient('localhost', 27017)
 db = client.test
-#collection = db.prereq
+collection = db.courses
 #collection.remove({})
-#collection.remove({})
-#collection.insert_one({"mat102":5})
+prereq = db.prereq
+#prereq.remove({})
 def HTMLParser(program):
     raw_text = requests.get("http://student.utm.utoronto.ca/calendar/list_courses.pl?Depart="+program)
 
     text =  raw_text.content.decode("utf-8")
     text = text[text.find("Academic Calendar 2017"):]#we cut text to make the file shorter
     lst = []
-    if text.find("Program Not Found") != -1 or text.find("This program is no longer offered")!=-1:
+    if text.find("Program Not Found") != -1 or text.find("This program is no longer offered")!=-1 or text.find("Department Not Found")!= -1:
         print("this runs")
         return lst
     while text.find('p class="titlestyle"')!=-1:
@@ -81,8 +81,8 @@ def HTMLParser(program):
         #print(dict)
         clean_distribution(dict)
         clean_prereq(dict)
-        #collection.insert(dict)
         lst.append(dict)
+        collection.insert(dict)
 
     return lst
 
@@ -90,7 +90,10 @@ def HTMLParser(program):
 def clean_distribution(dict):
     raw_course_name= dict['distribution']
     end = raw_course_name.find(">")-1
-    dict['distribution'] = raw_course_name[:end]
+    if end==-2:
+        pass
+    else:
+        dict['distribution'] = raw_course_name[:end]
 
 def clean_prereq(dict):
     if "prereq" not in dict:
@@ -108,7 +111,12 @@ def clean_prereq(dict):
         #print(js)
     dict['prereq'] = raw_prereq
 
-lst = HTMLParser(str(7))
+recognized_dict={}
+for i in range(80):
+    lst = HTMLParser(str(i))
+    recognized_dict = rec_prereq.recognized_prereq(lst,recognized_dict)
+print(recognized_dict)
+prereq.insert(recognized_dict)
 #dic = rec_prereq.recognized_prereq(lst)
 #collection.insert(dic)
 #collection.insert_many(lst)

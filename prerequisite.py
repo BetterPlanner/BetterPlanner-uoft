@@ -1,16 +1,15 @@
 #web = __import__('webScraper')
-from pymongo import MongoClient
+#from pymongo import MongoClient
 #for i in lst:
 #    clean_distribution(i)
 #print(lst)
 
 #print(test['prereq'])
 #print(test['course name'])
-def recognized_prereq(lst): #Return a dictionary of all the courses with a recognizable coursecode
+def recognized_prereq(lst,recognized_dict): #Return a dictionary of all the courses with a recognizable coursecode
     recognized = []
-    recognized_dict= {}
     for dict in lst:
-        if "prereq" not in dict:
+        if "prereq" not in dict: #{Course code:mat223,prereq:CSC108,MAT102}
             pass
         else:
             prereq = dict['prereq']
@@ -19,7 +18,7 @@ def recognized_prereq(lst): #Return a dictionary of all the courses with a recog
             prefix =''
             for i in prereq_lst:
                 if len(i)==8:
-                    recognized.append(i)
+                    #recognized.append(i)
                     prefix=i[:3]
                     if i in recognized_dict:
                         recognized_dict[i].append(dict['course code'])
@@ -34,9 +33,9 @@ def recognized_prereq(lst): #Return a dictionary of all the courses with a recog
                         recognized_dict[i] = [dict['course code']]
 
     return recognized_dict
-def getCourseInfo(courseCode,collection): #DB Search for courses that have a specific prerequisite
+#def getCourseInfo(courseCode,collection): #DB Search for courses that have a specific prerequisite
         #calls database to grab Courseinfo
-    return collection.find_one({"course code":courseCode})
+#    return collection.find_one({"course code":courseCode})
 
 def grabSearch(searchParameter):
     #call db function that searches for prereq
