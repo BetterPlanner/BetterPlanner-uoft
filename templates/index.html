@@ -1,11 +1,16 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="jumbotron text-center">
-        <h1> Search for a course you would like to find more information about</h1>
-         <form class="form-inline my-2 my-lg-0" action="/search/" method="POST">
-            <input class="form-control mr-sm-2" type="search" placeholder="Search" aria-label="Search" name="course">
-            <button class="btn btn-outline-success my-2 my-sm-0 center" type="submit">Search</button>
-         </form>
+    <div class="container">
+        <div class="jumbotron text-center">
+
+            <h1> Search for a course you would like to find more information about</h1>
+             <form class="form-group" action="/better-uoft/search/" method="POST">
+                <input class="form-control" type="search" placeholder="Search courses, (MAT102H5, CSC108H5)" aria-label="Search" name="course">
+                <button class="btn btn-outline-success my-2 my-sm-0 center" type="submit">Search</button>
+
+             </form>
+             </div>
+        </div>
     </div>
 {% endblock %}
