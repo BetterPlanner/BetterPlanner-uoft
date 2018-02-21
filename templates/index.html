@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container">
+    <!-- <div class="container">
         <div class="jumbotron text-center">
 
             <h1> Search for a course you would like to find more information about</h1>
@@ -11,6 +11,32 @@
 
              </form>
              </div>
+        </div>
+    </div> -->
+
+
+
+        <div class="ui main text container" style="margin-top: 7.0em">
+        <div class="ui huge header">Search Courses</div>
+        <div class="ui top  attached segment">
+            <p>
+                    <form action="/better-uoft/search/" method="POST" class="form-inline" id="Blog-search">
+                        <div class="ui search">
+                          <div class="ui icon input">
+                            <input class="form-control" type="search" placeholder="Search courses" aria-label="Search" name="course" style="text-transform: uppercase">
+                            
+                            <a class="ui floated basic violet button" type="submit">
+                                 Search
+                             </a>
+                          </div>
+                          <div class="results"></div>
+                        </div>
+
+                        <!--<div class="form-group">-->
+                        <!--    <input type="text" name="search" placeholder="Blog search..." class="form-control">-->
+                        <!--</div>-->
+                    </form>
+                </p>
         </div>
     </div>
 {% endblock %}
