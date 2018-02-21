@@ -24,6 +24,14 @@ def search_post():
         if i.get('course code')==data:
             info = i
             break;
+        elif i.get('course code')==data+"H5":
+            info = i
+            data = data+"H5"
+            break
+        elif i.get('course code')==data+"Y5":
+            info = i
+            data = data+"Y5"
+            break
 
 
     Prereq = prereq.find_one({data: {'$exists' : True}})
