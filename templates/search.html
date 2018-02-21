@@ -2,6 +2,7 @@
 
 {% block body %}
 
+
     <!-- <div class="jumbotron ">
 
         <div class="container">
@@ -88,12 +89,18 @@
                 <h3 class="ui dividing header">Corequisites</h3>
                 <div id="comm">
                     <div class="comment">
-                            <div class="content">
-                              <div class="html">
-                                {{Data['corequisite']}}
+                            <div id="two" class="content">
 
-                              </div>
                             </div>
+                            <script>
+                                  var $log = $( "#two" ),
+                                  str = "{{Data['corequisite']}}",
+                                  html = $.parseHTML( str );
+
+                                // Append the parsed HTML
+                                $log.append( html );
+
+                            </script>
                         </div>
                     </div>
                 </div>
