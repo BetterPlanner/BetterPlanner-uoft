@@ -11,27 +11,31 @@ db = client.test
 collection = db.courses
 prereq = db.prereq
 
+@app.route('/')
+def INDEX():
+    return betteruoft()
+
 @app.route('/better-uoft/')
 def betteruoft():
     return render_template("index.html")
 
 @app.route('/better-uoft/search/', methods=["POST"])
 def search_post():
-    data = request.form["course"]
+    data = request.form["course"].upper()
     info=""
     courseData = collection.find().batch_size(300)#.find_one({'course code':data})
     for i in courseData:
         if i.get('course code')==data:
             info = i
             break;
-        elif i.get('course code')==data+"H5":
+        if i.get('course code')==data+"H5":
             info = i
             data = data+"H5"
-            break
-        elif i.get('course code')==data+"Y5":
+            break;
+        if i.get('course code')==data+"Y5":
             info = i
             data = data+"Y5"
-            break
+            break;
 
 
     Prereq = prereq.find_one({data: {'$exists' : True}})
