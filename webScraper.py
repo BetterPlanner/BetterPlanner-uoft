@@ -64,7 +64,7 @@ def HTMLParser(program):
             preText = text[prereqLength:]
             preReqEnd = preText.find("<br>")
             rawPrereq = preText[:preReqEnd]
-            #print(rawPrereq)
+            print(rawPrereq)
             dict["prereq"] = rawPrereq
             text =text[preReqEnd+4:]
 
@@ -81,6 +81,7 @@ def HTMLParser(program):
         #print(dict)
         clean_distribution(dict)
         clean_prereq(dict)
+        clean_coreq(dict)
         lst.append(dict)
         collection.insert(dict)
 
@@ -110,6 +111,22 @@ def clean_prereq(dict):
         js = raw_prereq.find("<a")
         #print(js)
     dict['prereq'] = raw_prereq
+
+def clean_coreq(dict):
+    if "corequisite" not in dict:
+        return dict
+    raw_coreq = dict["corequisite"]
+    corequisite = ""
+    js = raw_coreq.find("<a")
+    while js!=-1:
+        course_beg = raw_coreq.find("Course=")+7
+        #print(course_beg)
+        course_end = raw_coreq.find("</a>")+4
+        raw_coreq = raw_coreq[:js]+raw_coreq[course_beg:+course_beg+8]+raw_coreq[course_end:]
+        #print(raw_prereq)
+        js = raw_coreq.find("<a")
+        #print(js)
+    dict['corequisite'] = raw_coreq
 
 recognized_dict={}
 for i in range(80):

@@ -16,27 +16,20 @@
 
 
 
-        <div class="ui main text container" style="margin-top: 7.0em">
+        <div class="ui main text container">
         <div class="ui huge header">Search Courses</div>
         <div class="ui top  attached segment">
-            <p>
-                    <form action="/better-uoft/search/" method="POST" class="form-inline" id="Blog-search">
-                        <div class="ui search">
-                          <div class="ui icon input">
-                            <input class="form-control" type="search" placeholder="Search courses" aria-label="Search" name="course" style="text-transform: uppercase">
-                            
-                            <a class="ui floated basic violet button" type="submit">
-                                 Search
-                             </a>
-                          </div>
-                          <div class="results"></div>
-                        </div>
+          <form action="/better-uoft/search/" method="POST">
+          <div class="ui form">
 
-                        <!--<div class="form-group">-->
-                        <!--    <input type="text" name="search" placeholder="Blog search..." class="form-control">-->
-                        <!--</div>-->
-                    </form>
-                </p>
+            <div class="ui fluid field">
+              <!-- <label>User Input</label> -->
+              <input class="form-control" type="text" autocomplete="off" placeholder="Search courses" name="course" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); display: block; cursor: auto;">
+
+            </div>
+            <!-- <div class="ui button">Search</div> -->
+          </div>
+        </form>
         </div>
     </div>
 {% endblock %}
