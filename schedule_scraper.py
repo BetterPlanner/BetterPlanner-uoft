@@ -8,4 +8,5 @@ def HTMLParser(course): #course is a list
         text = text[text.find("h4")+3:]
         coursename= text[:text.find("h4")]
 
-        table = text[text.find("table"):]
+        table = text[text.find("tbl_"+i):]
+        table = text[text.find(i):]
