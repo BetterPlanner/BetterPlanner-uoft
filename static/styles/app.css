@@ -1,0 +1,73 @@
+/*i.icon {*/
+/*    font-size: 2em;*/
+/*}*/
+.container.main {
+    margin-top: 7.0em;
+}
+#del {
+    display: inline;
+}
+#ic {
+    display: inline;
+}
+.ui.grid.main{
+	margin-top: 70px;
+}
+.del-form {
+	display: inline;
+}
+
+.mobile.row{
+	padding-top: 0px !important;
+	margin-top: 0px !important;
+}
+
+.mobile.row .ui.inverted.menu{
+	border-radius: 0px !important;
+}
+
+.padding-reset{
+	padding: 0px !important;
+}
+
+.ui.message{
+	padding: 40px !important;
+}
+
+@media (max-width: 767px) {
+  	.ui.grid.main{
+  		margin-top: 70px;
+	}
+
+        .ui.grid { margin: 0 !important; }
+	.ui.vertical.menu.navbar{
+		margin-top: 0px !important;
+	}
+}
+
+.ui.vertical.menu{
+	margin-top: -15px !important;
+	width: 100%;
+	display: none;
+}
+
+.hideform {
+	display: none;
+}
+.ui.reply.showform {
+	display: block
+}
+#blogcomment {
+	display: none;
+}
+
+.ui.edit.form {
+	display: none;
+}
+@media (min-height: 320px) {
+  .ui.footer.form-page { /* Increased specificity for SO snippet priority */
+    position: absolute;
+    bottom: 0;
+    width: 100%;
+  }
+}
