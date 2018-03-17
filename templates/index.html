@@ -1,7 +1,7 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="container">
+    <!-- <div class="container">
         <div class="jumbotron text-center">
 
             <h1> Search for a course you would like to find more information about</h1>
@@ -11,6 +11,25 @@
 
              </form>
              </div>
+        </div>
+    </div> -->
+
+
+
+        <div class="ui main text container">
+        <div class="ui huge header">Search Courses</div>
+        <div class="ui top  attached segment">
+          <form action="/better-uoft/search/" method="POST">
+          <div class="ui form">
+
+            <div class="ui fluid field">
+              <!-- <label>User Input</label> -->
+              <input class="form-control" type="text" autocomplete="off" placeholder="Search courses" name="course" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); display: block; cursor: auto;">
+
+            </div>
+            <!-- <div class="ui button">Search</div> -->
+          </div>
+        </form>
         </div>
     </div>
 {% endblock %}

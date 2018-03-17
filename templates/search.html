@@ -1,13 +1,15 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-    <div class="jumbotron ">
+
+
+    <!-- <div class="jumbotron ">
 
         <div class="container">
             <div class="col-6">
                 Search for another course you would like to know more about
         <form class="form-group" action="/better-uoft/search/" method="POST">
-                <input class="form-control" type="search" placeholder="Search courses, (MAT102H5, CSC108H5)" aria-label="Search" name="course">
+                <input class="form-control" type="search" placeholder="Search courses, (MAT102H5, CSC108H5)" aria-label="Search" name="course" style="text-transform: uppercase">
                 <button class="btn btn-outline-success my-2 my-sm-0 center" type="submit">Search</button>
         </form>
                 </div>
@@ -46,5 +48,83 @@
                 </div>
             </div>
         </ul>
+    </div> -->
+
+    <div class="ui main text container segement">
+      <form action="/better-uoft/search/" method="POST">
+      <div class="ui form">
+        <div class="ui fluid field">
+          <!-- <label>User Input</label> -->
+          <input class="form-control" type="text" autocomplete="off" placeholder="Search courses" name="course" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); display: block; cursor: auto;">
+
+        </div>
+        <!-- <div class="ui button">Search</div> -->
+      </div>
+    </form>
+    <div class="ui huge header"><a href="https://student.utm.utoronto.ca/calendar/OpenCourse.pl?Course={{Data['course code']}}">{{Data['course code']}} - {{Data['course name']}} </a></div>
+    <div class="ui top attached">
+
+        <div class="item">
+            <div class="content"><span>
+            </span></div>
+            <div class="description"><p>  {{Data['course description']}}</p><p>
+                </p>
+            </div>
+
+        </div>
+
+        <div id="commentsdiv" class="ui comments">
+            <h3 class="ui dividing header">Prerequisites</h3>
+            <div id="comm">
+                <div class="comment">
+                        <div class="content">
+                          <div class="text">
+                            {{Data['prereq']}}
+                          </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div id="commentsdiv" class="ui comments">
+                <h3 class="ui dividing header">Corequisites</h3>
+                <div id="comm">
+                    <div class="comment">
+                            <div id="two" class="content">
+
+                            </div>
+                            <script>
+                                  var $log = $( "#two" ),
+                                  str = "{{Data['corequisite']}}",
+                                  html = $.parseHTML( str );
+
+                                // Append the parsed HTML
+                                $log.append( html );
+
+                            </script>
+                        </div>
+                    </div>
+                </div>
+                <div id="commentsdiv" class="ui comments">
+                    <h3 class="ui dividing header">Necessary for:</h3>
+                    <div id="comm">
+                        <div class="comment">
+                                <div class="content">
+                                  <div class="ui grid">
+                                    {% for prereq in prereqs %}
+                                    <div class="four wide column">
+                                        <form id="{{ loop.index }}" action="/better-uoft/search/" method="POST">
+                                            <a href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{prereq}}</a>
+                                            <input type="hidden" name="course" value="{{prereq}}"/>
+                                        </form>
+                                    </div>
+                                    {% endfor %}
+                                </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+        </div>
     </div>
+
 {% endblock %}
