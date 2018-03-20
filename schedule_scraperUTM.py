@@ -28,7 +28,7 @@ class Schedules_Parser():
         raw_text = requests.get(rawstring)
         text = raw_text.content.decode("utf-8")
         if text.find("No matching courses")==-1:
-            print("Reached")
+            # print("Reached")
             if text.find(course+"F")!=-1:
                 lst.append(course+"F")
                 current = text[text.find(course+"F"):]
@@ -55,11 +55,13 @@ class Schedules_Parser():
             # print("foor loop")
             parser = startParser(i,lst_text[count])
             count+=1
-            if parser!=0:
-                return -1
+            # if parser!=0:
+            #     return -1
         return 1
 
 def startParser(course, text):
+    if text.find("* Cancelled *")>0:
+        return -1
     current_course_dict={}
     lectures={}
     current_lecture={}
@@ -105,12 +107,12 @@ def startParser(course, text):
         firstday = tableday[:tableday.find("</abbr") - 4]
         firstday.replace("\r"," ").replace("\n"," ").replace("\t"," ")
         tableDayList.append(firstday)
-        print(firstday)
+        # print(firstday)
         while(tableday.find("<abbr")!=-1):
 
             tableday = tableday[tableday.find("<abbr")+13:]
             courseday = tableday[:tableday.find("</abbr")-4]
-            print(courseday)
+            # print(courseday)
             tableDayList.append(tableday[:tableday.find("</abbr")-4])
             tableday = tableday[tableday.find("</abbr")+7:]
         #days list for current lecture
@@ -137,26 +139,27 @@ def startParser(course, text):
         while (tableEnd.find("<br>")!= -1): #End time
             endTimeList.append(tableEnd[:tableEnd.find("<br>")].strip())
             tableEnd = tableEnd[tableEnd.find("<br>")+4:]
-        for z in range (0,len(tableDayList)):
-            lstOfTime.append((startTimeList[z],endTimeList[z]))
+        if len(startTimeList)>0:
+            for z in range (0,len(tableDayList)):
+                lstOfTime.append((startTimeList[z],endTimeList[z]))
         # lectures array e.g [('10:00', '11:00'), ('09:00', '11:00')]
         # current_lecture["lecture_times"]=lstOfTime
 
-        table = table[table.find("<td>")+13:]
-        table = table[table.find("<td>")+4:]
-        tableRoom = table[:table.find("/td")]
-        while (tableRoom.find("<br>") != -1):  # Start time
-            roomNum = tableRoom[:tableRoom.find("<br>")].strip()
-            if roomNum.find("</a>")>0:
-                roomList.append(tableRoom[tableRoom.find(">")+1:tableRoom.find("</a>")])
-            else:
-                roomList.append(roomNum)
-            tableRoom = tableRoom[tableRoom.find("<br>")+4:]
-        current_lecture["rooms"]=roomList
-        for i in range(0,len(tableDayList)):
-            time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
-            lect_day_time[tableDayList[i]]=time
-        current_lecture["lect_day_time"]=lect_day_time
+            table = table[table.find("<td>")+13:]
+            table = table[table.find("<td>")+4:]
+            tableRoom = table[:table.find("/td")]
+            while (tableRoom.find("<br>") != -1):  # Start time
+                roomNum = tableRoom[:tableRoom.find("<br>")].strip()
+                if roomNum.find("</a>")>0:
+                    roomList.append(tableRoom[tableRoom.find(">")+1:tableRoom.find("</a>")])
+                else:
+                    roomList.append(roomNum)
+                tableRoom = tableRoom[tableRoom.find("<br>")+4:]
+            current_lecture["rooms"]=roomList
+            for i in range(0,len(tableDayList)):
+                time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
+                lect_day_time[tableDayList[i]]=time
+                current_lecture["lect_day_time"]=lect_day_time
         lectures[tableLecture]=current_lecture
         current_lecture={}
         lect_day_time={}
@@ -243,25 +246,26 @@ def pra_scraper(course ,table): #course is a list
         while (tableEnd.find("<br>")!= -1): #End time
             endTimeList.append(tableEnd[:tableEnd.find("<br>")].strip())
             tableEnd = tableEnd[tableEnd.find("<br>")+4:]
-        for z in range (0,len(tableDayList)):
-            lstOfTime.append((startTimeList[z],endTimeList[z]))
-        # print(lstOfTime)
-        table = table[table.find("<td>")+13:]
-        table = table[table.find("<td>")+4:]
-        tableRoom = table[:table.find("/td")]
-        while (tableRoom.find("<br>") != -1):  # Start time
-            roomNum = tableRoom[:tableRoom.find("<br>")].strip()
-            # print(roomNum)
-            if roomNum.find("</a>")>0:
-                roomList.append(tableRoom[tableRoom.find(">")+1:tableRoom.find("</a>")])
-            else:
-                roomList.append(roomNum)
-            tableRoom = tableRoom[tableRoom.find("<br>")+4:]
-        current_practical["room"]=roomList
-        for i in range(0,len(tableDayList)):
-            time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
-            prac_day_time[tableDayList[i]]=time
-        current_practical["prac_day_time"]=prac_day_time
+        if len(startTimeList)>0:
+            for z in range (0,len(tableDayList)):
+                lstOfTime.append((startTimeList[z],endTimeList[z]))
+            # print(lstOfTime)
+            table = table[table.find("<td>")+13:]
+            table = table[table.find("<td>")+4:]
+            tableRoom = table[:table.find("/td")]
+            while (tableRoom.find("<br>") != -1):  # Start time
+                roomNum = tableRoom[:tableRoom.find("<br>")].strip()
+                # print(roomNum)
+                if roomNum.find("</a>")>0:
+                    roomList.append(tableRoom[tableRoom.find(">")+1:tableRoom.find("</a>")])
+                else:
+                    roomList.append(roomNum)
+                tableRoom = tableRoom[tableRoom.find("<br>")+4:]
+            current_practical["room"]=roomList
+            for i in range(0,len(tableDayList)):
+                time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
+                prac_day_time[tableDayList[i]]=time
+            current_practical["prac_day_time"]=prac_day_time
         practicals[tableLecture]=current_practical
         current_practical={}
         prac_day_time={}
@@ -335,26 +339,27 @@ def tut_scraper(course ,table): #course is a list
         while (tableEnd.find("<br>")!= -1): #End time
             endTimeList.append(tableEnd[:tableEnd.find("<br>")].strip())
             tableEnd = tableEnd[tableEnd.find("<br>")+4:]
-        for z in range (0,len(tableDayList)):
-            lstOfTime.append((startTimeList[z],endTimeList[z]))
-        # print(lstOfTime)
-        table = table[table.find("<td>")+13:]
-        table = table[table.find("<td>")+4:]
-        tableRoom = table[:table.find("/td")]
-        while (tableRoom.find("<br>") != -1):  # Start time
-            roomNum = tableRoom[:tableRoom.find("<br>")].strip()
-            # print(roomNum)
-            if roomNum.find("</a>")>0:
-                roomList.append(tableRoom[tableRoom.find(">")+1:tableRoom.find("</a>")])
-            else:
+        if len(startTimeList)>0:
+            for z in range (0,len(tableDayList)):
+                lstOfTime.append((startTimeList[z],endTimeList[z]))
+            # print(lstOfTime)
+            table = table[table.find("<td>")+13:]
+            table = table[table.find("<td>")+4:]
+            tableRoom = table[:table.find("/td")]
+            while (tableRoom.find("<br>") != -1):  # Start time
+                roomNum = tableRoom[:tableRoom.find("<br>")].strip()
+                # print(roomNum)
+                if roomNum.find("</a>")>0:
+                    roomList.append(tableRoom[tableRoom.find(">")+1:tableRoom.find("</a>")])
+                else:
 
-                roomList.append(roomNum)
-            tableRoom = tableRoom[tableRoom.find("<br>")+4:]
-        current_tut["room"]=roomList
-        for i in range(0,len(tableDayList)):
-            time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
-            tut_day_time[tableDayList[i]]=time
-        current_tut["tut_day_time"]=tut_day_time
+                    roomList.append(roomNum)
+                tableRoom = tableRoom[tableRoom.find("<br>")+4:]
+            current_tut["room"]=roomList
+            for i in range(0,len(tableDayList)):
+                time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
+                tut_day_time[tableDayList[i]]=time
+            current_tut["tut_day_time"]=tut_day_time
         tuts[tableLecture]=current_tut
         current_tut={}
         tut_day_time={}
@@ -368,8 +373,8 @@ def tut_scraper(course ,table): #course is a list
 
 
 if __name__ == '__main__':
-    # for i in coursesindb.find():
-    #     Schedules_Parser(i["course code"])
-    #     pprint.pprint(i["course code"])
-    Schedules_Parser("CHM110H5")
+    for i in coursesindb.find():
+        Schedules_Parser(i["course code"])
+        pprint.pprint(i["course code"])
+    # Schedules_Parser("CHM110H5")
     print("done")
