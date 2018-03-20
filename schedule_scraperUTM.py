@@ -11,10 +11,11 @@ coursesindb= db.courses
 
 
 class Schedules_Parser():
-    def __init__(self,course):
-        self.course = course
+    def __init__(self):
         collection.drop()
-        self.course_code_fix(course)
+        for i in coursesindb.find():
+            pprint.pprint(i["course code"])
+            self.course_code_fix(i["course code"])
 
     def course_code_fix(self, course):
         lst = [] # each course can be offered in multiple seasons
@@ -190,7 +191,7 @@ def pra_scraper(course ,table): #course is a list
     prac_day_time={}
     #Capitalize the course code
 
-    i=course
+    # i=course
     instructorList = []
     roomList = []
     tableDayList = []
@@ -373,8 +374,7 @@ def tut_scraper(course ,table): #course is a list
 
 
 if __name__ == '__main__':
-    for i in coursesindb.find():
-        Schedules_Parser(i["course code"])
-        pprint.pprint(i["course code"])
-    # Schedules_Parser("CHM110H5")
+
+
+    scrapper=Schedules_Parser()
     print("done")
