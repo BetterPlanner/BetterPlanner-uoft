@@ -12,7 +12,7 @@ prereq = db.prereq
 class HTMLParser():
     def __init__(self):
         self.recognized_dict={}
-        collection.drop()
+        # collection.drop()
         self.startParser()
 
     def startParser(self):
@@ -28,7 +28,7 @@ class HTMLParser():
     def HTMLParser(self, program):
         raw_text = requests.get("http://student.utm.utoronto.ca/calendar/list_courses.pl?Depart="+program)
         text =  raw_text.content.decode("utf-8")
-        text = text[text.find("Academic Calendar 2017"):]#we cut text to make the file shorter
+        text = text[text.find("Academic Calendar 2018"):]#we cut text to make the file shorter
         if text.find("Program Not Found") != -1 or text.find("This program is no longer offered")!=-1 or text.find("Department Not Found")!= -1:
             # print("this runs")
             return []

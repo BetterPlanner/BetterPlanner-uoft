@@ -64,11 +64,11 @@ def startParser(course, text):
     if text.find("* Cancelled *")>0:
         return -1
     current_course_dict={}
-    lectures={}
+    lectures=[]
     current_lecture={}
     tableDayList = []
     roomList = []
-    lect_day_time={}
+    lect_day_time=[]
     sections={}
     # insert course name
     text = text[text.find("h4")+3:]
@@ -82,7 +82,7 @@ def startParser(course, text):
         table = table[table.find("tr_")+12:] #start table parsing
         tableLecture = table[:table.find("class")-2] #grab lecture number
         # print("Lecture " +tableLecture)
-
+        current_lecture["Name"]=tableLecture
         tableinst = table[table.find("instrTD")+10:]
         tableinst = tableinst[:tableinst.find("/td")] #getting instructor name
         #print("table instructor "+tableinst)
@@ -156,14 +156,15 @@ def startParser(course, text):
                 else:
                     roomList.append(roomNum)
                 tableRoom = tableRoom[tableRoom.find("<br>")+4:]
-            current_lecture["rooms"]=roomList
+            # current_lecture["rooms"]=roomList
             for i in range(0,len(tableDayList)):
-                time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
-                lect_day_time[tableDayList[i]]=time
+                time={"day":tableDayList[i], "start":lstOfTime[i][0], "end":lstOfTime[i][1],"room":roomList[i]}
+                lect_day_time.append(time)
                 current_lecture["lect_day_time"]=lect_day_time
-        lectures[tableLecture]=current_lecture
+        # lectures[tableLecture]=current_lecture
+        lectures.append(current_lecture)
         current_lecture={}
-        lect_day_time={}
+        lect_day_time=[]
         startTimeList = []
         endTimeList = []
         roomList = []
@@ -184,11 +185,11 @@ def startParser(course, text):
 
 def pra_scraper(course ,table): #course is a list
     lstofDic = []
-    practicals={}
+    practicals=[]
     current_practical={}
     tableDayList = []
     roomList = []
-    prac_day_time={}
+    prac_day_time=[]
     #Capitalize the course code
 
     # i=course
@@ -201,7 +202,7 @@ def pra_scraper(course ,table): #course is a list
         table = table[table.find("tr_")+12:] #start table parsing
         tableLecture = table[:table.find("class")-2] #grab lecture number
         # print("Lecture" +tableLecture)
-
+        current_practical["Name"]=tableLecture
         table = table[table.find("enrolTD")+10:]
         tableEnr = table[:table.find("</td>")].replace(" ","")#table enrol people who are enrolled and waitlisted
         # print(tableEnr.strip())
@@ -262,14 +263,14 @@ def pra_scraper(course ,table): #course is a list
                 else:
                     roomList.append(roomNum)
                 tableRoom = tableRoom[tableRoom.find("<br>")+4:]
-            current_practical["room"]=roomList
+            # current_practical["room"]=roomList
             for i in range(0,len(tableDayList)):
-                time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
-                prac_day_time[tableDayList[i]]=time
+                time={"day":tableDayList[i], "start":lstOfTime[i][0], "end":lstOfTime[i][1],"room":roomList[i]}
+                prac_day_time.append(time)
             current_practical["prac_day_time"]=prac_day_time
-        practicals[tableLecture]=current_practical
+        practicals.append(current_practical)
         current_practical={}
-        prac_day_time={}
+        prac_day_time=[]
         startTimeList = []
         endTimeList = []
         roomList = []
@@ -278,11 +279,11 @@ def pra_scraper(course ,table): #course is a list
 
 def tut_scraper(course ,table): #course is a list
     lstofDic = []
-    tuts={}
+    tuts=[]
     current_tut={}
     tableDayList = []
     roomList = []
-    tut_day_time={}
+    tut_day_time=[]
     #Capitalize the course code
 
     i=course
@@ -295,6 +296,7 @@ def tut_scraper(course ,table): #course is a list
         table = table[table.find("tr_")+12:] #start table parsing
         tableLecture = table[:table.find("class")-2] #grab lecture number
         # print("Lecture" +tableLecture)
+        current_tut["Name"]=tableLecture
 
         table = table[table.find("enrolTD")+10:]
         tableEnr = table[:table.find("</td>")].replace(" ","")#table enrol people who are enrolled and waitlisted
@@ -319,7 +321,7 @@ def tut_scraper(course ,table): #course is a list
             # print(courseday)
             tableDayList.append(tableday[:tableday.find("</abbr")-4])
             tableday = tableday[tableday.find("</abbr")+7:]
-        #print(tableDayList)
+        # print(tableDayList)
         table = table[table.find("start_time")+12:]
         tableStart = table[:table.find("</td>")]
         # print("day:")
@@ -356,14 +358,14 @@ def tut_scraper(course ,table): #course is a list
 
                     roomList.append(roomNum)
                 tableRoom = tableRoom[tableRoom.find("<br>")+4:]
-            current_tut["room"]=roomList
+            # current_tut["room"]=roomList
             for i in range(0,len(tableDayList)):
-                time={"start":lstOfTime[i][0], "end":lstOfTime[i][1]}
-                tut_day_time[tableDayList[i]]=time
+                time={"day":tableDayList[i],"start":lstOfTime[i][0], "end":lstOfTime[i][1],"room":roomList[i]}
+                tut_day_time.append(time)
             current_tut["tut_day_time"]=tut_day_time
-        tuts[tableLecture]=current_tut
+        tuts.append(current_tut)
         current_tut={}
-        tut_day_time={}
+        tut_day_time=[]
         startTimeList = []
         endTimeList = []
         roomList = []
