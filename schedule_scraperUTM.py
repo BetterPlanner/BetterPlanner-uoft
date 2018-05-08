@@ -71,9 +71,11 @@ def startParser(course, text):
     lect_day_time=[]
     sections={}
     # insert course name
+
     text = text[text.find("h4")+3:]
     coursename= text[:text.find("<b>")]
-    current_course_dict["course name"]= coursename
+    current_course_dict["course_code"]=course
+    current_course_dict["course_name"]= coursename
     # insert session
     current_course_dict["session"]=  coursename[8]
     print("course name " +coursename + "\n")
