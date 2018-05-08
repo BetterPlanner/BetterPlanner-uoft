@@ -27,12 +27,18 @@ def TimeTable(courses):
     schedule =[];
     practical =0;
     tutorial =0;
-    Monday=[]
-    Tuesday=[]
-    Wednesday=[]
-    Thursday=[]
-    Friday=[]
+    Monday=[[],[]]
+    Tuesday=[[],[]]
+    Wednesday=[[],[]]
+    Thursday=[[],[]]
+    Friday=[[],[]]
+    index=0
     for i in courses:
+        if i['session']=="S":
+            index=1
+        elif i['session']=="Y":
+            index=2
+
         #for j in courses:
         #get pracs #get tuts
         lectures =i['Sections']['lectures']
@@ -40,35 +46,126 @@ def TimeTable(courses):
             days = lecture['lect_day_time']
             for day in days:
                 if day['day']=="Monday":
-                    Monday.append({
-                        'course_name':i['course_name'],
-                        'course_code':i['course_code'],
-                        'lecture':lecture
-                    })
+                    if index<1:
+                        Monday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    elif index>1:
+                        Monday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                        Monday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    else:
+                        Monday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
                 elif day['day']=="Tuesday":
-                    Tuesday.append({
-                        'course_name':i['course_name'],
-                        'course_code':i['course_code'],
-                        'lecture':lecture
-                    })
+                    if index<1:
+                        Tuesday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    elif index>1:
+                        Tuesday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                        Tuesday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    else:
+                        Tuesday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
                 elif day['day']=="Wednesday":
-                    Wednesday.append({
-                        'course_name':i['course_name'],
-                        'course_code':i['course_code'],
-                        'lecture':lecture
-                    })
+                    if index<1:
+                        Wednesday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    elif index>1:
+                        Wednesday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                        Wednesday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    else:
+                        Wednesday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
                 elif day['day']=="Thursday":
-                    Thursday.append({
-                        'course_name':i['course_name'],
-                        'course_code':i['course_code'],
-                        'lecture':lecture
-                    })
+                    if index<1:
+                        Thursday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    elif index>1:
+                        Thursday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                        Thursday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    else:
+                        Thursday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
                 elif day['day']=="Friday":
-                    Friday.append({
-                        'course_name':i['course_name'],
-                        'course_code':i['course_code'],
-                        'lecture':lecture
-                    })
+                    if index<1:
+                        Friday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    elif index==2:
+                        Friday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                        Friday[0].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+                    else:
+                        Friday[1].append({
+                            'course_name':i['course_name'],
+                            'course_code':i['course_code'],
+                            'lecture':lecture
+                        })
+
     return 0
 
 if __name__ == '__main__':
