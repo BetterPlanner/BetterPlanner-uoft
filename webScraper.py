@@ -1,5 +1,9 @@
 import requests
 import json
+import time
+
+# Wait for 5 seconds
+
 from pymongo import MongoClient
 # from bs4 import BeautifulSoup
 rec_prereq = __import__('prerequisite')
@@ -12,7 +16,8 @@ prereq = db.prereq
 class HTMLParser():
     def __init__(self):
         self.recognized_dict={}
-        # collection.drop()
+        collection.drop()
+        prereq.drop()
         self.startParser()
 
     def startParser(self):
@@ -21,7 +26,7 @@ class HTMLParser():
             self.recognized_dict = rec_prereq.recognized_prereq(lst,self.recognized_dict)
         # lst = self.HTMLParser(str(9))
         # self.recognized_dict = rec_prereq.recognized_prereq(lst,self.recognized_dict)
-        # print(self.recognized_dict)
+
         prereq.insert(self.recognized_dict)
         print("done \n")
 
