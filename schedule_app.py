@@ -64,6 +64,28 @@ def TimeTable(courses):
             coursed["course_name"]["start"] = i["lect_day_time"]["start"]
             coursed["course_name"]["end"] = i["lect_day_time"]["end"]
             Friday.append(coursed)
-
+        weekend = {}
+        weekend["monday"]= Monday
+        weekend["tuesday"]= Tuesday
+        weekend["wednesday"] = Wednesday
+        weekend["thursday"] = Thursday
+        weekend["friday"] = Friday
+        helper(weekend,courses)
+def helper(week,courses): #takes in a dict called week
+    schedule = []
+    for i in courses:
+        if i not in schedule:
+            if week["monday"][i]:
+                pass
+            elif week["tuesday"][i]:
+                pass
+            elif week["wednesday"][i]:
+                pass
+            elif week["thursday"][i]:
+                pass
+            elif week["friday"][i]:
+                pass
+def checktimes(time,time2): #times are strings [00:00] format
+    hour1 = time[0:1]
 
 
