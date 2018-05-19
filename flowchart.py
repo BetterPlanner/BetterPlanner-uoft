@@ -30,7 +30,8 @@ def flow_helper(tree,dict,data):
             else:
                 if dict[i]:
                     tree.prev.append(dict[i])
-            flow_helper(tree.prev,dict,i)
+            tree = flow_helper(tree.prev,dict,i)
+            tree = tree.next
     if data["required_for"]:
         for i in data["required_for"]:
             course = collection.find_one({"course code": i})
@@ -40,4 +41,6 @@ def flow_helper(tree,dict,data):
         else:
             if dict[i]:
                 tree.next.append(dict[i])
-        flow_helper(tree.next, dict, i)
+        tree = flow_helper(tree.next, dict, i)
+        tree = tree.prev
+    return tree
