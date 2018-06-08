@@ -13,15 +13,11 @@ prereq = db.prereq
 
 @app.route('/')
 def INDEX():
-    return betteruoft()
-
-@app.route('/better-uoft/')
-def betteruoft():
     return render_template("index.html")
 
-@app.route('/better-uoft/search/', methods=["POST"])
+@app.route('/search', methods=["POST", "GET"])
 def search_post():
-    data = request.form["course"].upper()
+    data = request.args.get('course').upper()
     info=""
     courseData = collection.find().batch_size(300)#.find_one({'course code':data})
     for i in courseData:
