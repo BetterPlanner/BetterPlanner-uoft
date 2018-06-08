@@ -1,55 +1,6 @@
 {% extends 'layout.html' %}
 
 {% block body %}
-
-
-    <!-- <div class="jumbotron ">
-
-        <div class="container">
-            <div class="col-6">
-                Search for another course you would like to know more about
-        <form class="form-group" action="/better-uoft/search/" method="POST">
-                <input class="form-control" type="search" placeholder="Search courses, (MAT102H5, CSC108H5)" aria-label="Search" name="course" style="text-transform: uppercase">
-                <button class="btn btn-outline-success my-2 my-sm-0 center" type="submit">Search</button>
-        </form>
-                </div>
-            </div>
-        <ul class="list-group">
-            <div class="container">
-                <div class="row">
-                    <div class="col-9">
-                <a href="https://student.utm.utoronto.ca/calendar/OpenCourse.pl?Course={{Data['course code']}}">{{Data['course code']}} - {{Data['course name']}} </a>
-                        <li class="list-group-item">
-                            {{Data['course description']}}
-                        </li>
-                        <li class="list-group-item">
-                    Prerequisite:{{Data['prereq']}} <br>
-                        </li>
-
-                        <li class="list-group-item">
-                    Corequisite:{{Data['corequisite']}} <br>
-                        </li>
-                        <li class="list-group-item">
-                            Exclusion:{{Data['exclusion']}} <br>
-                        </li>
-                    </div>
-                    <div class="col-3">
-                        Necessary for:
-                        {% for prereq in prereqs %}
-                        <li class="list-group-item">
-                            <form id="{{ loop.index }}" action="/better-uoft/search/" method="POST">
-                                <a href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{prereq}}</a>
-                                <input type="hidden" name="course" value="{{prereq}}"/>
-
-                            </form>
-                        </li><br>
-                        {% endfor %}
-                    </div>
-                </div>
-            </div>
-        </ul>
-    </div> -->
-
     <div class="ui main text container segement">
       <form action="/better-uoft/search/" method="POST">
       <div class="ui form">
