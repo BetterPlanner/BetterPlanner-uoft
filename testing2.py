@@ -22,12 +22,23 @@ class main():
         self.course_unique_utm = {}
         self.courses_unique_utsg = {}
         self.courses_unique_utsc = {}
+        utm_courses.drop()
         self.utm_courses()
 
     def utm_courses(self):
         courses=[]
-        for i in cobalt_courses.find('name', {"campus": "UTM"}):
-            pprint.pprint(i)
+        for i in cobalt_courses.find({"campus": "UTM"}).distinct("code"):
+            if(len(i)==9):
+                courses.append(i)
+        for i in courses:
+            dic = cobalt_courses.find({"campus": "UTM", "code":i})
+
+            utm_courses.insert(dic[0])
+
+        # j = cobalt_courses.find({"code":courses[0], "campus": "UTM","term":'2019 Winter'})
+        # pprint.pprint(j[0])
+
+
         # for i in courses:
         #     cobalt_courses.find({"campus": "UTM", "name")
 
