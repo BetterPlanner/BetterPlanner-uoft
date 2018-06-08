@@ -27,8 +27,13 @@ class HTMLParser():
         # lst = self.HTMLParser(str(9))
         # self.recognized_dict = rec_prereq.recognized_prereq(lst,self.recognized_dict)
 
-        prereq.insert(self.recognized_dict)
+        # prereq.insert(self.recognized_dict)
+        self.add_required_for()
         print("done \n")
+    def add_required_for(self):
+        for i in self.recognized_dict:
+            # collection.find({"course code":i})["required_for"]=self.recognized_dict[i]
+            collection.update_one({"course code":i}, {'$set': {"required_for":self.recognized_dict[i]}})
 
     def HTMLParser(self, program):
         raw_text = requests.get("http://student.utm.utoronto.ca/calendar/list_courses.pl?Depart="+program)
