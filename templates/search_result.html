@@ -1,0 +1,48 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+    <div class="ui main text container segement">
+        <form action="/search" method="get">
+            <div class="ui form">
+                <div class="ui fluid field">
+          <!-- <label>User Input</label> -->
+                    <input class="form-control" type="text" autocomplete="off" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto;>
+                </div>
+        <!-- <div class="ui button">Search</div> -->
+            </div>
+        </form>
+        <div class="ui huge header">Results</div>
+        <div class="ui top attached">
+            <div class="ui items">
+                {% for course in courses %}
+                <div class="four wide column">
+                    <form id="{{ loop.index }}" action="/search" method="get">
+                        <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{prereq}}</a>
+                        <input type="hidden" name="course" value="{{prereq}}"/>
+                    </form>
+                </div>
+                <div class="item">
+                  <div class="content">
+                    <a class="header">Header</a>
+                    <div class="meta">
+                      <span>Description</span>
+                    </div>
+                    <div class="description">
+                      <p></p>
+                    </div>
+                    <div class="extra">
+                      Additional Details
+                    </div>
+                  </div>
+                </div>
+                {% endfor %}
+
+
+
+            </div>
+
+
+        </div>
+    </div>
+
+{% endblock %}

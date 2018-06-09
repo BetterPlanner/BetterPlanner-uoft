@@ -2,12 +2,11 @@
 
 {% block body %}
     <div class="ui main text container segement">
-      <form action="/better-uoft/search/" method="POST">
+      <form action="/search" method="get">
       <div class="ui form">
         <div class="ui fluid field">
           <!-- <label>User Input</label> -->
-          <input class="form-control" type="text" autocomplete="off" placeholder="Search courses" name="course" style="background-image: url(&quot;data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAAEAAAABCAQAAAC1HAwCAAAAC0lEQVR4nGP6zwAAAgcBApocMXEAAAAASUVORK5CYII=&quot;); display: block; cursor: auto;">
-
+          <input class="form-control" type="text" autocomplete="off" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto;>
         </div>
         <!-- <div class="ui button">Search</div> -->
       </div>
@@ -63,8 +62,8 @@
                                   <div class="ui grid">
                                     {% for prereq in prereqs %}
                                     <div class="four wide column">
-                                        <form id="{{ loop.index }}" action="/better-uoft/search/" method="POST">
-                                            <a href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{prereq}}</a>
+                                        <form id="{{ loop.index }}" action="/search" method="get">
+                                            <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{prereq}}</a>
                                             <input type="hidden" name="course" value="{{prereq}}"/>
                                         </form>
                                     </div>
