@@ -18,23 +18,25 @@
                     <div class="item">
                       <div class="content">
                         <a class="header"><form id="{{ loop.index }}" action="/search" method="get">
-                            <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{result['name']}}</a>
+                            <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{result['code']}} - {{result['name']}}</a>
                             <input type="hidden" name="course" value="{{result['code']}}"/>
                         </form></a>
                         <div class="meta">
                           <span>Description</span>
                         </div>
                         <div class="description">
-                          <p>{{result['description']}}</p>
+                          <p>{{result['description'][0:100]}}...</p>
                         </div>
                         <div class="extra">
                           <p>
-                              campus: {{result['campus']}} course code: {{result['code']}}
+                              campus: {{result['campus']}} course code: <label class="btn-link" for="{{result['code']}}" tabindex="0">{{result['code']}}</label>
                           </p>
                         </div>
                       </div>
+                      <form id="{{ loop.index }}" action="/search" method="get"><input id="{{result['code']}}" type="submit" name="course"  value="{{result['code']}}"style="visibility: hidden;"/></form>
                     </div>
                 {% endfor %}
+
             </div>
 
 
