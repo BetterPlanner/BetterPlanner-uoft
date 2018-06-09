@@ -21,6 +21,10 @@
                             <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{result['code']}} - {{result['name']}}</a>
                             <input type="hidden" name="course" value="{{result['code']}}"/>
                         </form></a>
+                          <div class="header">
+                              Campus: {{result['campus']}} <br>
+                              Course code: <label class="btn-link" for="{{result['code']}}" tabindex="0">{{result['code']}}</label>
+                          </div>
                         <div class="meta">
                           <span>Description</span>
                         </div>
@@ -28,9 +32,7 @@
                           <p>{{result['description'][0:100]}}...</p>
                         </div>
                         <div class="extra">
-                          <p>
-                              campus: {{result['campus']}} course code: <label class="btn-link" for="{{result['code']}}" tabindex="0">{{result['code']}}</label>
-                          </p>
+
                         </div>
                       </div>
                       <form id="{{ loop.index }}" action="/search" method="get"><input id="{{result['code']}}" type="submit" name="course"  value="{{result['code']}}"style="visibility: hidden;"/></form>
