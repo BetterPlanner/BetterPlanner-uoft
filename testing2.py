@@ -14,7 +14,9 @@ test_db        = client.test
 utm_courses    = test_db.utm_courses
 utsg_courses   = test_db.utsg_courses
 utsc_courses   = test_db.utsc_courses
-
+utm_course     = test_db.utm_course
+utsc_course    = test_db.utsc_course
+utsg_course    = test_db.utsg_course
 prereq         = test_db.prereq
 
 class main():
@@ -45,7 +47,12 @@ class main():
             if a==False:
                 b=cobalt_courses.find({"campus": "UTM", "name":i})
                 utm_courses.insert(b[0])
-
+        utm_course.drop()
+        for i in utm_courses.find():
+            j = i
+            j["code"]=i["code"][:8]
+            utm_course.insert(j)
+        utm_courses.drop()
         print("utm done")
         # j = cobalt_courses.find({"code":courses[0], "campus": "UTM","term":'2019 Winter'})
         # pprint.pprint(j[0])
@@ -70,6 +77,12 @@ class main():
             if not a:
                 b=cobalt_courses.find({"campus": "UTSG", "name":i})
                 utsg_courses.insert(b[0])
+        utsg_course.drop()
+        for i in utsg_courses.find():
+            j = i
+            j["code"]=i["code"][:8]
+            utsg_course.insert(j)
+        utsg_courses.drop()
         print("utsg done")
     def utsc_courses(self):
         utsc_courses.drop()
@@ -88,7 +101,12 @@ class main():
                 b=cobalt_courses.find({"campus": "UTSC", "name":i})
                 utsc_courses.insert(b[0])
         print("utsc done")
-
-
+        utsc_course.drop()
+        for i in utsc_courses.find():
+            j = i
+            j["code"]=i["code"][:8]
+            utsc_course.insert(j)
+        utsc_courses.drop()
+        print("utsc done")
 if __name__ == '__main__':
     main()
