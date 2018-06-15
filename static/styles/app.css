@@ -105,3 +105,22 @@
     font-family:inherit;
     font-size:inherit;
   }
+
+ .ui.items>.item>.content {
+    display: block;
+    -webkit-box-flex: 1;
+    -webkit-flex: 1 1 auto;
+    -ms-flex: 1 1 auto;
+    flex: 1 1 auto;
+    background: 0 0;
+    margin: 0;
+    padding: 0;
+    padding-top: 0px;
+    padding-right: 0px;
+    padding-bottom: 20px;
+    padding-left: 20px;
+    box-shadow: none;
+    font-size: 1em;
+    border: none;
+    border-radius: 0;
+}

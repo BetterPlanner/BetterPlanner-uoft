@@ -37,9 +37,11 @@ def search_post():
             break
         if i.get('code')==data+"H1":
             info.append(i)
+            # data = data+"H1"
             break
         if i.get('code')==data+"H1":
             info.append(i)
+            # data = data+"H1"
             break
 
     for k in utmData:
@@ -48,24 +50,29 @@ def search_post():
             break
         if k.get('code')==data+"H5":
             info.append(k)
+            # data = data+"H5"
             break
         if k.get('code')==data+"Y5":
             info.append(k)
+            # data = data+"Y5"
             break
 
     if not data[3].isalpha():
         data = data[:3] + chr(ord(data[3])+16) + data[4:]
-
+    
     for j in utscData:
         if j.get('code')==data:
             info.append(j)
             break
         if j.get('code')==data+"H3":
             info.append(j)
+            # data = data+"H3"
             break
         if j.get('code')==data+"Y3":
             info.append(j)
+            # data = data+"Y3"
             break
+
 
 
     if info:
@@ -76,6 +83,9 @@ def search_post():
             return render_template("search_new.html", Data=info[0], url=url)
     else:
         return render_template("/index.html")
+
+
+
 
 def url_for_campus(campus,division,course):
     url=""
@@ -96,5 +106,7 @@ def url_for_campus(campus,division,course):
         url = "https://www.utoronto.ca/"
     return url
 
+
+
 if __name__=='__main__':
-    app.run(host='0.0.0.0', port=8080, debug=True)
+    app.run(host='0.0.0.0', port=5000, debug=True)

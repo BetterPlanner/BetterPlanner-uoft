@@ -6,25 +6,24 @@
             <div class="ui form">
                 <div class="ui fluid field">
           <!-- <label>User Input</label> -->
-                    <input class="form-control" type="text" autocomplete="off" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto;>
+                    <input class="form-control" type="text" autocomplete="off" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto; autofocus>
                 </div>
         <!-- <div class="ui button">Search</div> -->
             </div>
         </form>
         <div class="ui huge header">Results</div>
         <div class="ui top attached">
-            <div class="ui items">
+            <div class="ui segments items">
                 {% for result in Data %}
-                    <div class="item">
+                    <div class="item segment" style="padding-left: 20px; padding-bottom: 20px">
                       <div class="content">
                         <a class="header"><form id="{{ loop.index }}" action="/search" method="get">
                             <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{result['code']}} - {{result['name']}}</a>
                             <input type="hidden" name="course" value="{{result['code']}}"/>
                         </form></a>
-                          <div class="header">
-                              Campus: {{result['campus']}} <br>
-                              Course code: <label class="btn-link" for="{{result['code']}}" tabindex="0">{{result['code']}}</label>
-                          </div>
+
+                              Campus: {{result['campus']}}
+
                         <div class="meta">
                           <span>Description</span>
                         </div>
@@ -32,7 +31,7 @@
                           <p>{{result['description'][0:100]}}...</p>
                         </div>
                         <div class="extra">
-
+                            Course code: <label class="btn-link" for="{{result['code']}}" tabindex="0">{{result['code']}}</label>
                         </div>
                       </div>
                       <form id="{{ loop.index }}" action="/search" method="get"><input id="{{result['code']}}" type="submit" name="course"  value="{{result['code']}}"style="visibility: hidden;"/></form>
