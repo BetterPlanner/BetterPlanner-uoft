@@ -38,7 +38,7 @@ def search_post():
         if i.get('code')==data+"H1":
             info.append(i)
             break
-        if i.get('code')==data+"H1":
+        if i.get('code')==data+"Y1":
             info.append(i)
             break
 

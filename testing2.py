@@ -14,6 +14,9 @@ test_db        = client.test
 utm_extra    = test_db.utm_extra
 utsg_extra   = test_db.utsg_extra
 utsc_extra   = test_db.utsc_extra
+
+utm_courses     = test_db.utm_course
+
 utm_courses     = test_db.utm_courses
 utsc_courses    = test_db.utsc_courses
 utsg_courses    = test_db.utsg_courses
@@ -34,15 +37,21 @@ class main():
         self.utm_courses()
         self.utsc_courses()
         self.utsg_courses()
+        # self.utm()
 
-    def utm_courses(self):
+    def utm(self):
         utm_extra.drop()
+        course = []
         courses=[]
-        for i in cobalt_courses.find({"campus": "UTM"}).distinct("name"):
-            courses.append(i)
+        for i in cobalt_courses.find({"campus": "UTM"}).distinct("code"):
+            if i[:8] not in course:
+                courses.append(i)
+                course.append(i[:8])
+
+
         for i in courses:
             a = False
-            dic = cobalt_courses.find({"campus": "UTM", "name":i})
+            dic = cobalt_courses.find({"campus": "UTM", "code":i})
             # utm_courses.insert(dic[0])
             for j in dic:
                 if len(j["code"])==9:
@@ -51,7 +60,39 @@ class main():
                     break
 
             if a==False:
-                b=cobalt_courses.find({"campus": "UTM", "name":i})
+                b=cobalt_courses.find({"campus": "UTM", "code":i})
+                utm_extra.insert(b[0])
+        utm_courses.drop()
+
+        for i in utm_extra.find():
+            j = i
+            j["code"]=i["code"][:8]
+            utm_courses.insert(j)
+            self.utm_course_list.append(j)
+        utm_extra.drop()
+        self.run_prereq_utm()
+        print("utm done")
+
+    def utm_courses(self):
+        utm_extra.drop()
+        courses=[]
+        course = []
+        for i in cobalt_courses.find({"campus": "UTM"}).distinct("code"):
+            if i[:8] not in course:
+                courses.append(i)
+                course.append(i[:8])
+        for i in courses:
+            a = False
+            dic = cobalt_courses.find({"campus": "UTM", "code":i})
+            # utm_courses.insert(dic[0])
+            for j in dic:
+                if len(j["code"])==9:
+                    a = True
+                    utm_extra.insert(j)
+                    break
+
+            if a==False:
+                b=cobalt_courses.find({"campus": "UTM", "code":i})
                 utm_extra.insert(b[0])
         utm_courses.drop()
 
@@ -67,18 +108,21 @@ class main():
     def utsg_courses(self):
         utsg_extra.drop()
         courses=[]
-        for i in cobalt_courses.find({"campus": "UTSG"}).distinct("name"):
-            courses.append(i)
+        course = []
+        for i in cobalt_courses.find({"campus": "UTSG"}).distinct("code"):
+            if i[:8] not in course:
+                courses.append(i)
+                course.append(i[:8])
         for i in courses:
             a=False
-            dic = cobalt_courses.find({"campus": "UTSG", "name":i})
+            dic = cobalt_courses.find({"campus": "UTSG", "code":i})
             for j in dic:
                 if len(j["code"])==9:
                     utsg_extra.insert(j)
                     a = True
                     break
             if not a:
-                b=cobalt_courses.find({"campus": "UTSG", "name":i})
+                b=cobalt_courses.find({"campus": "UTSG", "code":i})
                 utsg_extra.insert(b[0])
         utsg_courses.drop()
         for i in utsg_extra.find():
@@ -93,18 +137,21 @@ class main():
     def utsc_courses(self):
         utsc_extra.drop()
         courses=[]
-        for i in cobalt_courses.find({"campus": "UTSC"}).distinct("name"):
-            courses.append(i)
+        course = []
+        for i in cobalt_courses.find({"campus": "UTSC"}).distinct("code"):
+            if i[:8] not in course:
+                courses.append(i)
+                course.append(i[:8])
         for i in courses:
             a=False
-            dic = cobalt_courses.find({"campus": "UTSC", "name":i})
+            dic = cobalt_courses.find({"campus": "UTSC", "code":i})
             for j in dic:
                 if len(j["code"])==9:
                     utsc_extra.insert(j)
                     a = True
                     break
             if not a:
-                b=cobalt_courses.find({"campus": "UTSC", "name":i})
+                b=cobalt_courses.find({"campus": "UTSC", "code":i})
                 utsc_extra.insert(b[0])
         utsc_courses.drop()
         for i in utsc_extra.find():
