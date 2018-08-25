@@ -18,6 +18,6 @@ BetterPlanner is a course catalog search used to help course planning and provid
 - Data for courses is synced with Cobalt to have up to date course info. (https://cobalt.qas.im/)
 
 ![](cobalt.jpg)
-- Currently being Hosted on a Ubuntu server with a local MongoDB instance.MZ
+- Currently being Hosted on a Ubuntu server with a local MongoDB instance
 
 
