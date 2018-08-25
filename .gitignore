@@ -1,1 +1,7 @@
-/__pycache__/
+/__pycache__
+nohup.out
+log
+/.idea
+/._app.py\
+/._necessary_for.py
+/._parse_cobalt.py
