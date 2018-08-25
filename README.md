@@ -14,3 +14,4 @@ BetterPlanner is a course catalog search used to help course planning and provid
 - Currently being Hosted on a Ubuntu server with a local MongoDB instance.MZ
 
 ![](screenshot.png)
+![](mongodb.png)
