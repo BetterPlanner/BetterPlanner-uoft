@@ -5,3 +5,5 @@ log
 ._app.py/
 ._necessary_for.py/
 ._parse_cobalt.py/
+.DS_Store
+templates/.*
