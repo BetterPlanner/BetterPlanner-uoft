@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>BetterPlanner</title>
-    <!-- <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.10/semantic.min.css" /> -->
-    <!-- Global site tag (gtag.js) - Google Analytics -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112179304-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -22,48 +20,55 @@
     </script>
     <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/app.css') }}">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" rel="stylesheet" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 <div class="wrapper">
-
-    <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/reset.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/site.css') }}">
-
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/container.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/grid.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/header.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/image.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/menu.css') }}">
-
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/divider.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/dropdown.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/segment.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/button.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/list.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/icon.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/sidebar.css') }}">
-     <link rel="stylesheet" type="text/css" href="{{ url_for('static',filename='styles/components/transitions.css') }}">
-
-
 </head>
     <body class="Site">
         <main class="Site-content">
             {% include 'includes/_navbar.html' %}
             {% block body %}{% endblock %}
         </main>
-
-    <!-- <div class="ui fixed black inverted vertical footer segment">
-        <div class="ui center aligned container">
-
-        </div>
-        <div class="ui horizontal inverted small divided link list">
-            <a class="item" href="https://ali-raza.me">Ali</a>
-            <a class="item" href="https://github.com/luu-alex">Alex</a>
-            Reach out for any questions or further discussions: alex.luu@mail.utoronto.ca
-        </div>
-    </div> -->
-    <!-- <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.3/css/bootstrap.min.css"> -->
-</script>
-<!-- <script src="/scripts/searchblog.js" async defer></script> -->
-
+        </script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
+        <script type="text/javascript">
+        $('.ui.search.dropdown').search({
+            type          : 'category',
+            minCharacters : 3,
+            apiSettings   : {
+              url        : '/search_queries?query={query}',
+              onResponse : function(res) {
+                var
+                  response = {
+                    results : {}
+                  }
+                ;
+                if(!res || !res.result) {
+                  return;
+                }
+                $.each(res.result, function(index, item) {
+                  $.each(item,function(key,value){
+                      var campus   = value[1] || 'lol',maxResults = 10;
+                      if(index >= maxResults) {
+                        return false;
+                      }
+                      // create new campus category
+                      if(response.results[campus] === undefined) {
+                        response.results[campus] = {
+                          name    : campus,
+                          results : []
+                        };
+                      }
+                      // add result to category
+                      response.results[campus].results.push({
+                        title       : key,
+                        description : value[0]
+                      });
+                  });
+                });
+                return response;
+              }
+            }
+        });
+        </script>
     </body>
 </html>

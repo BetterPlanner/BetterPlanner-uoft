@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, jsonify
 from pymongo import MongoClient
 app = Flask(__name__)
 client = MongoClient('localhost', 27017)
@@ -12,10 +12,41 @@ utsg_course    = test_db.utsg_courses
 def INDEX():
     return render_template("index.html")
 
+@app.route('/search_queries')
+def search_queries():
+
+    data = request.args.get('query').upper()
+    info=[]
+    utm=utm_course.find({'code':{'$regex':'^'+data}}).batch_size(500)
+    utsg=utsg_course.find({'code':{'$regex':'^'+data}}).batch_size(500)
+    utsc=utsc_course.find({'code':{'$regex':'^'+data}}).batch_size(500)
+    for i in utm:
+        info.append({i["code"]:[i["name"],i["campus"]]})
+    for i in utsg:
+        info.append({i["code"]:[i["name"],i["campus"]]})
+    for i in utsc:
+        info.append({i["code"]:[i["name"],i["campus"]]})
+    #
+    #     # info.append(utm_course.find({'code':{'$regex':'^'+data}}).batch_size(500))
+    #     # info.append(utsg_course.find({'code':{'$regex':'^'+data}}).batch_size(500))
+    #     print(utm_course.find({'code':{'$regex':'^'+data}}).batch_size(500))
+    #
+    #
+    # if not data[3].isalpha():
+    #     data = data[:3] + chr(ord(data[3])+16) + data[4:]
+    #
+    #     # info.append(utsc_course.find({'code':{'$regex':'^'+data}}).batch_size(500))
+    #     print(utm_course.find({'code':{'$regex':'^'+data+'*'}}).batch_size(500)[1]["code"])
+    # # print(info[0])
+
+    return jsonify(result=info)
+
+
 @app.route('/search', methods=["POST", "GET"])
 def search_post():
     data = request.args.get('course').upper()
-
+    if len(data)<4:
+        return render_template("/index.html")
     info =[]
     utscData = utsc_course.find().batch_size(500)
     utmData = utm_course.find().batch_size(500)

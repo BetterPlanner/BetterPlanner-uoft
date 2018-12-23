@@ -4,11 +4,15 @@
     <div class="ui main text container segement">
         <form action="/search" method="get">
             <div class="ui form">
-                <div class="ui fluid field">
-          <!-- <label>User Input</label> -->
-                    <input class="form-control" type="text" autocomplete="off" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto; autofocus>
+                <div class="ui fluid search dropdown">
+                  <div class="ui left icon input">
+                    <input class="prompt" type="text" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto;>
+                    <i class="search icon"></i>
+                    <button class="ui icon button">
+                        <i class="search icon"></i>
+                    </button>
+                  </div>
                 </div>
-        <!-- <div class="ui button">Search</div> -->
             </div>
         </form>
         <div class="ui huge header">Results</div>

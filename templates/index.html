@@ -11,14 +11,15 @@
         <div class="ui top  attached">
           <form action="/search" method="get">
           <div class="ui form">
-
-            <div class="ui fluid field icon input">
-
-
-              <input class="form-control" type="text" autocomplete="off" autofocus placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto;>
-              <i class="search icon"></i>
+            <div class="ui fluid search dropdown">
+              <div class="ui left icon input">
+                <input class="prompt" type="text" placeholder="Search courses e.g CSC148 or eco100" name="course" id="course" display: block; cursor: auto;>
+                <i class="search icon"></i>
+                <button class="ui icon button">
+                    <i class="search icon"></i>
+                </button>
+              </div>
             </div>
-
           </div>
         </form>
         </div>
@@ -39,7 +40,6 @@
                         This is a project contributed by <a href="https://github.com/luu-alex">Alex Luu</a>, <a href="https://www.ali-raza.me/">Ali Raza</a> and <a href="https://bitbucket.org/lealexchang/">Alex Chang</a>. Checkout on <a href="https://github.com/BetterPlanner">GitHub</a>.<br>
 Reach out for any questions or further discussions: alex.luu@mail.utoronto.ca. <br>
                     </p>
-                    <!-- <button class="btn-link" action="/better-uoft/search/"  for="submit-form" type="submit" name="course" value="CSC148H5">CSC148H5</button> -->
                     <form id="csc148" action="/search" method="get"><input id="submit-form" type="submit" name="course"  value="CSC148H5"style="visibility: hidden;"/><input id="submit-108" type="submit" name="course"  value="CSC108H5"style="visibility: hidden;"/><input id="submit-458" type="submit" name="course" value="BIO458H5" style="visibility: hidden;"/></form><br>
                 </div>
             </div>
