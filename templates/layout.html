@@ -1,74 +1,31 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>BetterPlanner</title>
-    <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112179304-1"></script>
-    <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
+    <head>
+        <meta charset="UTF-8">
+        <title>BetterPlanner</title>
+        <script async src="https://www.googletagmanager.com/gtag/js?id=UA-112179304-1"></script>
+        <script>
+            window.dataLayer = window.dataLayer || [];
+            function gtag(){dataLayer.push(arguments);}
+            gtag('js', new Date());
 
-      gtag('config', 'UA-112179304-1');
-    </script>
+            gtag('config', 'UA-112179304-1');
+        </script>
+        <script
+          src="https://code.jquery.com/jquery-3.1.1.min.js"
+          integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+          crossorigin="anonymous">
+        </script>
+        <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/app.css') }}">
+        <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" rel="stylesheet" />
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
 
-
-    <script
-      src="https://code.jquery.com/jquery-3.1.1.min.js"
-      integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
-      crossorigin="anonymous">
-    </script>
-    <link rel= "stylesheet" type= "text/css" href= "{{ url_for('static',filename='styles/app.css') }}">
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.0.8/semantic.min.css" rel="stylesheet" />
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.4.1/semantic.min.js"></script>
-<div class="wrapper">
-</head>
+    </head>
     <body class="Site">
         <main class="Site-content">
-            {% include 'includes/_navbar.html' %}
+        {% include 'includes/_navbar.html' %}
             {% block body %}{% endblock %}
         </main>
-        </script>
-        <script src="https://cdnjs.cloudflare.com/ajax/libs/semantic-ui/2.2.11/semantic.min.js"></script>
-        <script type="text/javascript">
-        $('.ui.search.dropdown').search({
-            type          : 'category',
-            minCharacters : 3,
-            apiSettings   : {
-              url        : '/search_queries?query={query}',
-              onResponse : function(res) {
-                var
-                  response = {
-                    results : {}
-                  }
-                ;
-                if(!res || !res.result) {
-                  return;
-                }
-                $.each(res.result, function(index, item) {
-                  $.each(item,function(key,value){
-                      var campus   = value[1] || 'lol',maxResults = 10;
-                      if(index >= maxResults) {
-                        return false;
-                      }
-                      // create new campus category
-                      if(response.results[campus] === undefined) {
-                        response.results[campus] = {
-                          name    : campus,
-                          results : []
-                        };
-                      }
-                      // add result to category
-                      response.results[campus].results.push({
-                        title       : key,
-                        description : value[0]
-                      });
-                  });
-                });
-                return response;
-              }
-            }
-        });
-        </script>
+        <script src="{{ url_for('static',filename='js/searchajax.js') }}" type="text/javascript"></script>
     </body>
 </html>
