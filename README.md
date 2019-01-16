@@ -9,8 +9,8 @@ BetterPlanner is a course catalog search used to help course planning and provid
 
 ### Behind the scenes:
 
-- Uses Python and flask as the backend server.
-- Uses MongoDB to store all course at UofT.
+- Uses [Python](https://www.python.org/) and [flask](https://palletsprojects.com/p/flask/) as the backend server.
+- Uses [MongoDB](https://www.mongodb.com/) to store all course at UofT.
 
 ![](mongo.png)
 - Uses Jinja to help with rendering server side html and css pages.
