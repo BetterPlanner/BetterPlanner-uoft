@@ -32,9 +32,29 @@
             <div id="comm">
                 <div class="comment">
                         <div class="content">
-                          <div class="text">
-                            {{Data['prerequisites']}}
+                          <div id="prerequisites" class="text">
                           </div>
+                          <script>
+                                var $log = $( "#prerequisites" ),
+                                str = "{{Data['prerequisites']}}"
+                                arr = {{ Data['prerequisites_array']|tojson }},
+                                res = str.split(/([_\W])/);
+                                
+                                var return_val = res.map(add_refs);                                
+                                
+                                function add_refs(value) {
+                                    console.log(value)
+                                    var clean = value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                                    if(arr.includes(clean)){
+                                        return "<a href=/search?course="+value+"> "+value+" </a>"
+                                    }
+                                    if(clean.charAt(clean.length-2) == "H"){
+                                        return "<a href=/search?course="+value+"> "+value+" </a>"
+                                    }
+                                    return value
+                                }
+                                $log.append( return_val );
+                          </script>
                         </div>
                     </div>
                 </div>
@@ -47,13 +67,22 @@
 
                             </div>
                             <script>
-                                  var $log = $( "#two" ),
-                                  str = "{{Data['exclusions']}}",
-                                  html = $.parseHTML( str );
-
-                                // Append the parsed HTML
-                                $log.append( html );
-
+                                var $log = $( "#two" ),
+                                str = "{{Data['exclusions']}}",
+                                
+                                res = str.replace(/(<([^>]+)>)/ig,"");
+                                res = res.split(/([_\W])/);
+                                
+                                var return_val = res.map(add_refs);                                
+                                
+                                function add_refs(value) {
+                                    var clean = value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
+                                    if(clean.charAt(clean.length-2) == "H"){
+                                        return "<a href=/search?course="+value+"> "+value+" </a>"
+                                    }
+                                    return value
+                                }
+                                $log.append( return_val );
                             </script>
                         </div>
                     </div>
@@ -66,10 +95,7 @@
                                   <div class="ui grid">
                                     {% for prereq in Data['required_for'] %}
                                     <div class="four wide column">
-                                        <form id="{{ loop.index }}" action="/search" method="get">
-                                            <a id="course" href="javascript:;" onclick="document.getElementById('{{ loop.index }}').submit();">{{prereq}}</a>
-                                            <input type="hidden" name="course" value="{{prereq}}"/>
-                                        </form>
+                                        <a href="/search?course={{prereq}}">{{prereq}}</a>
                                     </div>
                                     {% endfor %}
                                 </div>
