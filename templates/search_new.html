@@ -43,7 +43,6 @@
                                 var return_val = res.map(add_refs);                                
                                 
                                 function add_refs(value) {
-                                    console.log(value)
                                     var clean = value.replace(/[.,\/#!$%\^&\*;:{}=\-_`~()]/g,"");
                                     if(arr.includes(clean)){
                                         return "<a href=/search?course="+value+"> "+value+" </a>"
@@ -83,6 +82,7 @@
                                     return value
                                 }
                                 $log.append( return_val );
+                                // console.log({{ tree|tojson }});
                             </script>
                         </div>
                     </div>
